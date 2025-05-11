@@ -1,9 +1,8 @@
 resource "aws_s3_bucket" "bucket" {
-  bucket = var.bucket_name
-  acl    = "private"
-  region = "ap-south-1"  # Specify the region
+  bucket = "Terraform_Module_Conf_Template"
+}
 
-  tags = {
-    Name = "Terraform Module Bucket"
-  }
+resource "aws_s3_bucket_acl" "bucket_acl" {
+  bucket = aws_s3_bucket.bucket.bucket
+  acl    = "private"
 }
