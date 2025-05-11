@@ -1,4 +1,5 @@
 variable "bucket_name" {
-  description = "The name of the S3 bucket"
+  description = "S3 bucket name"
   type        = string
+  default     = "Terraform_Module_Conf_Template"
 }
