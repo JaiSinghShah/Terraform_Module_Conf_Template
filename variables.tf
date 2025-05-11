@@ -1,15 +1,31 @@
+variable "region" {
+  description = "AWS region to deploy the resources"
+  type        = string
+  default     = ap-south-1"  # Or set via CLI/Jenkins input
+}
+
+variable "aws_profile" {
+  description = "AWS CLI profile to use"
+  type        = string
+  default     = "default"  # Optional, use only if you use AWS profiles
+}
+
 variable "vpc_cidr" {
-  type = string
+  description = "CIDR block for the VPC"
+  type        = string
 }
 
 variable "ami_id" {
-  type = string
+  description = "AMI ID to use for the EC2 instance"
+  type        = string
 }
 
 variable "instance_type" {
-  type = string
+  description = "Instance type for EC2"
+  type        = string
 }
 
 variable "bucket_name" {
-  type = string
+  description = "S3 bucket name"
+  type        = string
 }
