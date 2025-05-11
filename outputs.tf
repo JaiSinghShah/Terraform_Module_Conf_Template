@@ -1,23 +1,15 @@
-output "vpc_cidr" {
-  value = "10.0.0.0/16"
+output "vpc_id" {
+  value = module.networking.vpc_id
 }
 
-output "ami_id" {
-  value = "ami-0e35ddab05955cf57"
+output "subnet_id" {
+  value = module.networking.subnet_id
 }
 
-output "instance_type" {
-  value = "t2.micro"
+output "instance_id" {
+  value = module.compute.instance_id
 }
 
 output "bucket_name" {
-  value = "Terraform_Module_Conf_Template"
-}
-
-output "region" {
-  value = "ap-south-1"
-}
-
-output "aws_profile" {
-  value = "default"
+  value = module.storage.bucket_name
 }
