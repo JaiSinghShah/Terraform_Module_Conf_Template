@@ -2,43 +2,40 @@ pipeline {
     agent any
 
     environment {
-        TF_VAR_region = 'ap-south-1'
-        TF_VAR_aws_profile = 'default'
-        TF_VAR_bucket_name = 'Terraform_Module_Conf_Template'  // Adjust this if needed
-        TF_VAR_vpc_cidr = '10.0.0.0/16'
-        TF_VAR_ami_id = 'ami-0e35ddab05955cf57'  // Replace with valid AMI
-        TF_VAR_instance_type = 't2.micro'
+        // Only include AWS credentials from Jenkins secrets
+        AWS_CREDENTIALS = 'AWS-Cred'
     }
 
     stages {
         stage('Checkout') {
             steps {
+                // Checkout the Terraform repository from GitHub
                 git branch: 'main', url: 'https://github.com/JaiSinghShah/Terraform_Module_Conf_Template.git'
             }
         }
 
         stage('Terraform Init') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Cred']]) {
-                    bat 'terraform init'
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS]]) {
+                    bat 'terraform init'  // Initialize Terraform (use 'sh' for Linux agents)
                 }
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Cred']]) {
-                    bat 'terraform plan'
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS]]) {
+                    bat 'terraform plan'  // Run Terraform Plan (use 'sh' for Linux agents)
                 }
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Cred']]) {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS]]) {
                     script {
                         try {
-                            bat 'terraform apply -auto-approve'
+                            bat 'terraform apply -auto-approve'  // Apply Terraform changes
                         } catch (Exception e) {
                             currentBuild.result = 'FAILURE'
                             error 'Terraform apply failed, triggering rollback.'
@@ -53,8 +50,8 @@ pipeline {
                 expression { currentBuild.result == 'FAILURE' }
             }
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Cred']]) {
-                    bat 'terraform destroy -auto-approve'
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: AWS_CREDENTIALS]]) {
+                    bat 'terraform destroy -auto-approve'  // Rollback if apply fails
                 }
             }
         }
