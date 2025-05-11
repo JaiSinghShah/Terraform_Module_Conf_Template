@@ -1,11 +1,6 @@
-output "vpc_id" {
-  value = module.networking.vpc_id
-}
-
-output "instance_id" {
-  value = module.compute.instance_id
-}
-
-output "bucket_arn" {
-  value = module.storage.bucket_arn
-}
+vpc_cidr      = "10.0.0.0/16"
+ami_id        = "ami-0e35ddab05955cf57"
+instance_type = "t2.micro"
+bucket_name   = "Terraform_Module_Conf_Template"
+region        = "ap-south-1"
+aws_profile   = "default"
