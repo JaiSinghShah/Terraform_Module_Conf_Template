@@ -1,6 +1,5 @@
 provider "aws" {
   region  = "ap-south-1"  # ✅ Make sure this region is valid
-  profile = "default"    # Optional: only if you're using named AWS profiles
 }
 
 module "networking" {
