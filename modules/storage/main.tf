@@ -1,11 +1,13 @@
 resource "aws_s3_bucket" "bucket" {
-  bucket        = var.bucket_name
-  force_destroy = var.force_destroy
+  bucket = "terraform-module-conf-template"  # Ensure it's lowercase
 
-  tags = var.tags
+  # No need to specify ACL here if not required by AWS
+  # Removed: acl argument, AWS manages the access control automatically.
+
+  tags = {
+    Name        = "terraform-module-conf-template"
+    Environment = "Dev"
+  }
 }
 
-resource "aws_s3_bucket_acl" "bucket_acl" {
-  bucket = aws_s3_bucket.bucket.id
-  acl    = var.acl
-}
+# Optionally, if you need specific permissions, you can add an S3 bucket policy here.
