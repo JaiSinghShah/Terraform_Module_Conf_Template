@@ -1,7 +1,13 @@
 variable "vpc_cidr" {
-  description = "CIDR block for the VPC"
+  description = "The CIDR block for the VPC"
   type        = string
   default     = "10.0.0.0/16"
+}
+
+variable "subnet_cidr" {
+  description = "The CIDR block for the subnet"
+  type        = string
+  default     = "10.0.1.0/24"
 }
 
 variable "ami_id" {
@@ -11,13 +17,7 @@ variable "ami_id" {
 }
 
 variable "instance_type" {
-  description = "Instance type for the EC2 instance"
+  description = "Instance type for the EC2"
   type        = string
   default     = "t2.micro"
-}
-
-variable "bucket_name" {
-  description = "S3 bucket name"
-  type        = string
-  default     = "Terraform_Module_Conf_Template"
 }
