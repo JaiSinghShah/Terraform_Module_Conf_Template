@@ -1,15 +1,6 @@
-variable "vpc_cidr" {
-  type = string
-}
 
-variable "ami_id" {
-  type = string
+variable "region" {
+  description = "AWS Region"
+  default     = "ap-south-1"
 }
-
-variable "instance_type" {
-  type = string
-}
-
-variable "bucket_name" {
-  type = string
-}
+    
